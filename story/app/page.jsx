@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
+import Link from "next/link";
 import { use, useEffect, useRef, useState } from "react";
 
 function round(num, precision = 2) {
@@ -76,61 +77,66 @@ export default function Chat() {
 	}
 
 	return (
-		<div className="w-full h-screen flex flex-col items-center justify-center">
-			<div
-				className="max-w-[20cm] w-full max-h-[70%] h-full bg-muted rounded-lg shadow-lg"
-				style={
-					themeReady && resolvedTheme === "dark"
-						? {
-							backgroundImage:
-								"url('https://ik.imagekit.io/bk01nkfyo/adrien-olichon-_GH9LwhlSO4-unsplash.jpg?updatedAt=1752442951203?tr=r-20')",
-							backgroundSize: "cover",
-							backgroundPosition: "center",
-						}
-						: {
-							backgroundImage:
-								"url('https://ik.imagekit.io/bk01nkfyo/renato-trentin-4eWsCl8Bw7s-unsplash.jpg?updatedAt=1752442951349?tr=r-20')",
-							backgroundSize: "cover",
-							backgroundPosition: "center",
-						}}
-			>
-				<div className="w-full h-full flex flex-col gap-4 p-4 justify-between backdrop-blur-sm rounded-lg">
-					<div className="flex flex-col gap-2 w-full overflow-y-auto" ref={containerRef}>
-						{messages.length >= 1 ? messages.map((message, index) => (
-							<div key={index} className="mr-2 mb-2 rounded-lg border-2 border-muted-foreground/30 bg-muted-foreground/20 p-4 backdrop-blur-md transition-colors duration-200 hover:border-muted-foreground/60">
-								<p className="text-primary">{message.role === "user" ? "You: " : "AI: "}{message.content}</p>
-							</div>
-						)) : (
-							<div className="mr-2 mb-2 rounded-lg border-2 border-muted-foreground/30 bg-muted-foreground/20 p-4 backdrop-blur-md transition-colors duration-200 hover:border-muted-foreground/60">
-								<p className="text-primary">To start, simply enter a prompt to start the story with!</p>
-							</div>
-						)}
-					</div>
-					<div className="flex flex-col items-center">
-						<input
-							type="text"
-							value={input}
-							onChange={(e) => setInput(e.target.value)}
-							placeholder={messages.length === 0 ? "Enter your story prompt here..." : messages.length >= 100 ? "Too many messages, please start a new story." : "Describe your changes..."}
-							className="p-2 border border-muted-foreground bg-muted/50 backdrop-blur-md rounded-lg w-3/4 mb-4"
-							autoFocus
-							onKeyDown={(e) => {
-								if (e.key === "Enter" && !processing) {
-									handleSubmit();
-								}
+		<>
+			<div className="w-full h-screen flex flex-col items-center justify-center">
+				<div
+					className="max-w-[20cm] w-full max-h-[70%] h-full bg-muted rounded-lg shadow-lg border-2 border-muted-foreground/30"
+					style={
+						themeReady && resolvedTheme === "dark"
+							? {
+								backgroundImage:
+									"url('https://ik.imagekit.io/bk01nkfyo/adrien-olichon-_GH9LwhlSO4-unsplash.jpg?updatedAt=1752442951203?tr=r-20')",
+								backgroundSize: "cover",
+								backgroundPosition: "center",
+							}
+							: {
+								backgroundImage:
+									"url('https://ik.imagekit.io/bk01nkfyo/renato-trentin-4eWsCl8Bw7s-unsplash.jpg?updatedAt=1752442951349?tr=r-20')",
+								backgroundSize: "cover",
+								backgroundPosition: "center",
 							}}
-							disabled={processing}
-						/>
-						<Button
-							onClick={handleSubmit}
-							disabled={processing}
-							className={"w-3/4" + (processing ? " opacity-50 cursor-not-allowed" : "")}
-						>
-							{processing ? round(waitingTime) : "Send"}
-						</Button>
+				>
+					<div className="w-full h-full flex flex-col gap-4 p-4 justify-between backdrop-blur-sm rounded-lg">
+						<div className="flex flex-col gap-2 w-full overflow-y-auto" ref={containerRef}>
+							{messages.length >= 1 ? messages.map((message, index) => (
+								<div key={index} className="mr-2 mb-2 rounded-lg border-2 border-muted-foreground/30 bg-muted-foreground/20 p-4 backdrop-blur-md transition-colors duration-200 hover:border-muted-foreground/60">
+									<p className="text-primary">{message.role === "user" ? "You: " : "AI: "}{message.content}</p>
+								</div>
+							)) : (
+								<div className="mr-2 mb-2 rounded-lg border-2 border-muted-foreground/30 bg-muted-foreground/20 p-4 backdrop-blur-md transition-colors duration-200 hover:border-muted-foreground/60">
+									<p className="text-primary">To start, simply enter a prompt to start the story with!</p>
+								</div>
+							)}
+						</div>
+						<div className="flex flex-col items-center">
+							<input
+								type="text"
+								value={input}
+								onChange={(e) => setInput(e.target.value)}
+								placeholder={messages.length === 0 ? "Enter your story prompt here..." : messages.length >= 100 ? "Too many messages, please start a new story." : "Describe your changes..."}
+								className="p-2 border border-muted-foreground bg-muted/50 backdrop-blur-md rounded-lg w-3/4 mb-4"
+								autoFocus
+								onKeyDown={(e) => {
+									if (e.key === "Enter" && !processing) {
+										handleSubmit();
+									}
+								}}
+								disabled={processing}
+							/>
+							<Button
+								onClick={handleSubmit}
+								disabled={processing}
+								className={"w-3/4" + (processing ? " opacity-50 cursor-not-allowed" : "")}
+							>
+								{processing ? round(waitingTime) : "Send"}
+							</Button>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+			<div className="fixed bottom-0 w-full flex justify-center items-center p-4">
+				<p className="text-muted-foreground text-sm">If you can, please provide feedback <Link href={"https://editid.fillout.com/story"} className="underline hover:dark:text-blue-400 hover:text-blue-500 transition-colors duration-300">here</Link>.</p>
+			</div>
+		</>
 	)
 }
