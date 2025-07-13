@@ -97,11 +97,11 @@ export default function Chat() {
 				<div className="w-full h-full flex flex-col gap-4 p-4 justify-between backdrop-blur-sm rounded-lg">
 					<div className="flex flex-col gap-2 w-full overflow-y-auto" ref={containerRef}>
 						{messages.length >= 1 ? messages.map((message, index) => (
-							<div key={index} className="p-4 mr-2 bg-muted-foreground/20 backdrop-blur-md rounded-lg mb-2 border-2 border-muted-foreground/30">
+							<div key={index} className="mr-2 mb-2 rounded-lg border-2 border-muted-foreground/30 bg-muted-foreground/20 p-4 backdrop-blur-md transition-colors duration-200 hover:border-muted-foreground/60">
 								<p className="text-primary">{message.role === "user" ? "You: " : "AI: "}{message.content}</p>
 							</div>
 						)) : (
-							<div className="p-4 mr-2 bg-muted-foreground/20 backdrop-blur-md rounded-lg mb-2 border-2 border-muted-foreground/30">
+							<div className="mr-2 mb-2 rounded-lg border-2 border-muted-foreground/30 bg-muted-foreground/20 p-4 backdrop-blur-md transition-colors duration-200 hover:border-muted-foreground/60">
 								<p className="text-primary">To start, simply enter a prompt to start the story with!</p>
 							</div>
 						)}
