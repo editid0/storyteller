@@ -78,7 +78,7 @@ export default function Chat() {
 
 	return (
 		<>
-			<div className="w-full h-screen flex flex-col items-center justify-center">
+			<div className="w-full h-screen flex flex-col items-center justify-center bg-gradient-to-br dark:from-blue-400/20 dark:to-indigo-500/20 from-blue-200 to-indigo-300">
 				<div
 					className="max-w-[20cm] w-full max-h-[70%] h-full bg-muted rounded-lg shadow-lg border-2 border-muted-foreground/30"
 					style={
