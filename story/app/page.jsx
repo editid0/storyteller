@@ -78,7 +78,7 @@ export default function Chat() {
 
 	return (
 		<>
-			<div className="w-full h-screen flex flex-col items-center justify-center bg-gradient-to-br dark:from-blue-400/20 dark:to-indigo-500/20 from-blue-200 to-indigo-300">
+			<div className="w-full h-screen flex flex-col items-center justify-center bg-gradient-to-br dark:from-blue-400/20 dark:to-indigo-500/20 from-blue-200 to-indigo-300 px-2">
 				<div
 					className="max-w-[20cm] w-full max-h-[70%] h-full bg-muted rounded-lg shadow-lg border-2 border-muted-foreground/30"
 					style={
@@ -134,8 +134,10 @@ export default function Chat() {
 					</div>
 				</div>
 			</div>
-			<div className="fixed bottom-0 w-full flex justify-center items-center p-4">
-				<p className="text-muted-foreground text-sm">If you can, please provide feedback <Link href={"https://editid.fillout.com/story"} className="underline hover:dark:text-blue-400 hover:text-blue-500 transition-colors duration-300">here</Link>.</p>
+			<div className="fixed bottom-0 w-full h-fit">
+				<div className="w-fit mx-auto flex justify-center items-center p-4 bg-muted/80 rounded-t-lg shadow-xl border-t-2 border-x-2 border-muted-foreground/30">
+					<p className="text-muted-foreground text-sm">If you can, please provide feedback <Link href={"https://editid.fillout.com/story"} className="underline hover:dark:text-blue-400 hover:text-blue-500 transition-colors duration-300">here</Link>.</p>
+				</div>
 			</div>
 		</>
 	)
