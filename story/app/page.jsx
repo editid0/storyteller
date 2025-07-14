@@ -139,6 +139,21 @@ export default function Chat() {
 					<p className="text-muted-foreground text-sm">If you can, please provide feedback <Link href={"https://editid.fillout.com/story"} className="underline hover:dark:text-blue-400 hover:text-blue-500 transition-colors duration-300">here</Link>.</p>
 				</div>
 			</div>
+			<div className="fixed bottom-0 right-0 p-4">
+				<Button
+					variant="destructive"
+					className="rounded-full cursor-pointer"
+					onClick={() => {
+						// Clear messages and input
+						setMessages([]);
+						setInput("");
+						setProcessing(false);
+						setWaitingTime(0);
+					}}
+				>
+					Reset
+				</Button>
+			</div>
 		</>
 	)
 }
