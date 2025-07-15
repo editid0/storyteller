@@ -9,6 +9,22 @@ function round(num, precision = 2) {
 	return Math.round((num + Number.EPSILON) * 10 ** precision) / 10 ** precision;
 }
 
+function exportAsMarkdown(messages) {
+	const markdown = messages.map((message) => {
+		const role = message.role === "user" ? "You" : "AI";
+		return `**${role}:** ${message.content}`;
+	}).join("\n\n");
+	const blob = new Blob([markdown], { type: 'text/markdown' });
+	const url = URL.createObjectURL(blob);
+	const a = document.createElement('a');
+	a.href = url;
+	a.download = 'story.md';
+	document.body.appendChild(a);
+	a.click();
+	document.body.removeChild(a);
+	URL.revokeObjectURL(url);
+}
+
 export default function Chat() {
 	const [messages, setMessages] = useState([]);
 	const [input, setInput] = useState("");
@@ -139,20 +155,35 @@ export default function Chat() {
 					<p className="text-muted-foreground text-sm">If you can, please provide feedback <Link href={"https://editid.fillout.com/story"} className="underline hover:dark:text-blue-400 hover:text-blue-500 transition-colors duration-300">here</Link>.</p>
 				</div>
 			</div>
-			<div className="fixed bottom-0 right-0 p-4">
-				<Button
-					variant="destructive"
-					className="rounded-full cursor-pointer"
-					onClick={() => {
-						// Clear messages and input
-						setMessages([]);
-						setInput("");
-						setProcessing(false);
-						setWaitingTime(0);
-					}}
-				>
-					Reset
-				</Button>
+			<div className="fixed bottom-0 right-0 flex flex-col items-end">
+				<div className="pr-4 pb-2">
+					<Button
+						variant="secondary"
+						className={messages.length === 0 ? "rounded-full cursor-not-allowed opacity-50" : (processing ? "rounded-full cursor-not-allowed opacity-50" : "rounded-full cursor-pointer")}
+						onClick={() => {
+							if (messages.length === 0) return;
+							if (processing) return;
+							exportAsMarkdown(messages);
+						}}
+					>
+						Export as Markdown
+					</Button>
+				</div>
+				<div className="pr-4 pb-4 pt-2">
+					<Button
+						variant="destructive"
+						className="rounded-full cursor-pointer"
+						onClick={() => {
+							// Clear messages and input
+							setMessages([]);
+							setInput("");
+							setProcessing(false);
+							setWaitingTime(0);
+						}}
+					>
+						Reset
+					</Button>
+				</div>
 			</div>
 		</>
 	)
